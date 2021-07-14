@@ -31,7 +31,7 @@
     login_password: "{{ mysql_root_password }}"
   tags: [ mysql ]
 
-- name: Create MySQL user for WordPress
+- name: Create MySQL user for WebSite
   mysql_user:
     name: "{{ mysql_wp_user }}"
     password: "{{ mysql_wp_password }}"

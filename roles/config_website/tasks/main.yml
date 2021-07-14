@@ -1,0 +1,15 @@
+---
+# tasks file for config_wordpress
+- name: Site config
+  template:
+    src: "website.j2"
+    dest: "/etc/nginx/sites-available/{{ project_name }}"
+  notify: Reload Nginx
+
+- name: Site enable
+  file:
+    src: "/etc/nginx/sites-available/{{ project_name }}"
+    dest: "/etc/nginx/sites-enabled/{{ project_name }}"
+    state: link
+  tags: [ website ]
+  notify: Reload Nginx

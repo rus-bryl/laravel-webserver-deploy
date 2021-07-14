@@ -10,6 +10,7 @@
   apt: 
     name:
       - mysql-server
+      - mysql-client
       - python3-pymysql
       - percona-xtrabackup-80
       - qpress 

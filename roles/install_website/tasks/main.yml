@@ -1,0 +1,30 @@
+---
+# tasks file for install_website
+- name: Clone Repo from Bitbucket
+  git:
+    repo: git@bitbucket.org:websolab/eurofinance.git
+    key_file: /home/brm/.ssh/id_rsa_bitbucket_brm
+    dest: /var/www/{{ project_name }}/
+    accept_hostkey: yes
+    force: yes
+  tags: [ website ]
+
+
+- name: Set ownership
+  file:
+    path: "/var/www"
+    state: directory
+    recurse: yes
+    owner: www-data
+    group: www-data
+  tags: [ website ]
+
+- name: Set permissions for directories
+  shell: "/usr/bin/find /var/www/{{ project_name }}/ -type d -not -perm 0750 -print >&1 -exec chmod 750 {} \\;"
+  changed_when: False
+  tags: [ website ]
+
+- name: Set permissions for files
+  shell: "/usr/bin/find /var/www/{{ project_name }}/ -type f -not -perm 0640 -print >&1 -exec chmod 640 {} \\;"
+  changed_when: False
+  tags: [ website ]

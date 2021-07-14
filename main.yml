@@ -50,8 +50,8 @@
   roles:
   - install_nginx
   - install_php
-#  - install_wordpress
+  - install_website
   - config_nginx
-#  - config_wordpress
-#  - config_ssl
+  - config_website
+  - config_ssl
 

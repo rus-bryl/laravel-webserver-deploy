@@ -1,15 +1,15 @@
 [webservers]
-webserver ansible_host=192.168.1.165
+webserver ansible_host=192.168.1.185
 
 [proxysql]
-webserver ansible_host=192.168.1.165
+#webserver ansible_host=192.168.1.165
 
 [db_masters]
-dbmaster1 ansible_host=192.168.1.167
+dbmaster1 ansible_host=192.168.1.185
 
 [db_slaves]
-dbslave1 ansible_host=192.168.1.168
-dbslave2 ansible_host=192.168.1.172
+#dbslave1 ansible_host=192.168.1.168
+#dbslave2 ansible_host=192.168.1.172
 
 [db_servers:children]
 db_masters
@@ -18,9 +18,9 @@ db_slaves
 [all:vars]
 # MySQL Settings
 mysql_root_password="mysqlpassword"
-mysql_db="wordpress"
-mysql_wp_user="wpuser"
-mysql_wp_password="wppassword"
+mysql_db="wda_ef"
+mysql_wp_user="wda_ef"
+mysql_wp_password="AS67ka2sUk6U"
 mysql_replica_user="replicauser"
 mysql_replica_password="replicapassword"
 
@@ -31,3 +31,4 @@ proxysql_admin_password="proxyadminpassword"
 http_host="brm.smn.com.ua"
 http_conf="your_domain.conf"
 http_port="80"
+project_name="eurofinance"
