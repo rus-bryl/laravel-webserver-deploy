@@ -1,5 +1,9 @@
 ---
 # tasks file for update_system
+- name: Set Timezone
+  timezone:
+    name: Europe/Kiev
+
 - name: Install prerequisites
   apt: name=aptitude update_cache=yes state=latest force_apt_get=yes
   ignore_errors: yes

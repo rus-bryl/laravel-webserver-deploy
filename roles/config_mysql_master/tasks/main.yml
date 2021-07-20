@@ -26,27 +26,26 @@
     dest: "/etc/mysql/conf.d/mysql.cnf"
   notify: Restart MySQL
 
-#- name: Download SQL Dump file
-#  get_url:
-#    client_key: /home/brm/.ssh/id_rsa_bitbucket_brm
-#    force_basic_auth: yes
-#    url_username: rus-bryl
-#    url_password: Rfhf,fc1970
-#    url: "https://bitbucket.org/websolab/eurofinance/src/master/wda_ef.2021-07-07.sql.gz"
-#    dest: /tmp/dump.sql.gz
-
+- name: Clone Repo from Bitbucket
+  git:
+    repo: git@bitbucket.org:websolab/eurofinance.git
+    key_file: /home/brm/.ssh/id_rsa_bitbucket_brm
+    dest: /var/www/{{ project_name }}/
+    version: master
+    accept_hostkey: yes
+    force: yes
 
 - name: Search for Database dump
   find:
     paths: /var/www/{{ project_name }}
-    patterns: 'wda_ef.*.sql.gz'
+    patterns: 'wda_ef*.sql'
   register: db_dump
 
 - name: Copy db_dump file
   copy:
     remote_src: yes
     src: "{{ item.path }}"
-    dest: /tmp/dump.sql.gz
+    dest: /tmp/dump.sql
   with_items: "{{ db_dump.files }}"
 
 - name: Restore DataBase from dump file
@@ -55,25 +54,5 @@
     login_user: root
     login_password: "{{ mysql_root_password }}"
     state: import
-    target: /tmp/dump.sql.gz
-
-#- name: Dump WebSite DB
-#  mysql_db:
-#    login_user: root
-#    login_password: "{{ mysql_root_password }}"
-#    name: "{{ mysql_db }}"
-#    single_transaction: yes
-#    state: dump
-#    target: /tmp/dump.sql
-
-#- name: Get binlog file and position
-#  mysql_replication:
-#    login_user: root
-#    login_password: "{{ mysql_root_password }}"
-#    mode: getmaster
-#  register: master
-
-#- name: look for binlod file and position
-#  debug:
-#    msg: File- {{ master.File }} and Position- {{ master.Position }}
+    target: /tmp/dump.sql
 
